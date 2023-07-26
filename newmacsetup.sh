@@ -112,7 +112,7 @@ install_record_av() {
 [ -z "$(which code)" ] && brew install --cask visual-studio-code
 [ -z "$(which httpstat)" ] && brew install httpstat
 [ -z "$(which ranger)" ] && brew install ranger
-[ -z "$(ls /Applications | grep Microsoft\ Edge)" ] && brew install microsoft-edge
+[ -z "$(ls /Applications | grep Microsoft\ Edge)" ] && brew install --cask microsoft-edge
 [ -z "$(ls /Applications | grep zoom.us.app)" ] && brew install --cask zoom
 
 # copy vimrc
