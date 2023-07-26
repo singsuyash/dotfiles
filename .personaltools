@@ -202,7 +202,7 @@ redisdown() {
 
 # shortcuts begins
 alias dio="/Applications/draw.io.app/Contents/MacOS/draw.io"
-alias speed="~/tools/ookla-speedtest-1.0.0-macosx/speedtest"
+alias speed="speedtest"
 alias rv="osascript /Applications/recordwithvideo.scpt"
 alias jot="open https://blogbydev.com/wp-admin/post-new.php"
 alias jotp="open https://blogbydev.com/wp-admin/edit.php"
