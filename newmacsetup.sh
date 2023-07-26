@@ -69,6 +69,10 @@ install_ookla_speed_test() {
     brew install speedtest --force
 }
 
+install_record_av() {
+    cp ./recordwithvideo.scpt /Applications/
+}
+
 [ -z "$(which brew)" ] && install_homebrew
 [ -z "$(which pyenv)" ] && install_pyenv
 [ -z "$(which python3)" ] && pyenv install 3.10.4
@@ -79,7 +83,7 @@ install_ookla_speed_test() {
 [ -z "$(which unzip)" ] && brew install unzip
 [ -z "$(which tree)" ] && brew install tree 
 [ -z "$(which htop)" ] && brew install htop 
-[ -z "$(which nvm)" ] && install_nvm
+[ -z "$(whereis nvm)" ] && install_nvm
 [ -z "$(which node)" ] && nvm install node
 [ -z "$(which fig)" ] && install_fig
 [ -z "$(ls /Applications | grep 1Password.app)" ] && install_1password
@@ -87,8 +91,9 @@ install_ookla_speed_test() {
 [ -z "$(brew ls --versions powerlevel10k)" ] && install_powerlevel10k
 [ -z "$(ls ~/.zsh/ | grep zsh-autosuggestions)" ] && install_zsh_autosuggestions
 [ -z "$(ls ~/.zsh/ | grep zsh-syntax-highlighting)" ] && install_zsh_syntax_highlighting
-[ -z "$(which sdkman)" ] && install_sdkman
+[ -z "$(whereis sdk)" ] && install_sdkman
 [ -z "$(which speedtest)" ] && install_ookla_speed_test
+[ -z "$(ls /Applications | grep recordwithvideo)" ] && install_record_av
 
 # copy vimrc
 if [ -n "$(ls -halt ~/ | grep vimrc)" ]
