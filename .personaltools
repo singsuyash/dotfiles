@@ -1,3 +1,6 @@
+dotfilesdirectory=$(dirname "$0")
+alias vimp="vim $dotfilesdirectory/.personaltools"
+alias sourcep="source $dotfilesdirectory/.personaltools"
 # docker begins
 enabledocker() {
     alias dcelkup="docker-compose -f docker-compose.yml -f extensions/filebeat/filebeat-compose.yml up -d"

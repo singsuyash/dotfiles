@@ -129,11 +129,6 @@ if [ -z "$(ls -halt ~/ | grep personaltools)" ]
 then
     cp .personaltools ~/.
     echo "source $(pwd)/.personaltools" >> ~/.zshrc
-else
-    mv $HOME/.personaltools $HOME/.personaltools.backup
-    cp .personaltools ~/.
-    source $HOME/.personaltools
-    echo "updated personaltools"
 fi
 
 echo "Setup 1Password app, then integrate with 1password cli, visit https://developer.1password.com/docs/cli/get-started"
