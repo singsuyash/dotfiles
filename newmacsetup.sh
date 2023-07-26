@@ -93,7 +93,7 @@ install_record_av() {
 [ -z "$(which unzip)" ] && brew install unzip
 [ -z "$(which tree)" ] && brew install tree 
 [ -z "$(which htop)" ] && brew install htop 
-[ -z "$(whereis nvm)" ] && install_nvm
+[ -z "$(which nvm)" ] && install_nvm
 [ -z "$(which node)" ] && nvm install node
 [ -z "$(which fig)" ] && install_fig
 [ -z "$(ls /Applications | grep 1Password.app)" ] && install_1password
@@ -128,9 +128,12 @@ fi
 if [ -z "$(ls -halt ~/ | grep personaltools)" ]
 then
     cp .personaltools ~/.
-    echo "source ~/.personaltools" >> ~/.zshrc
+    echo "source $(pwd)/.personaltools" >> ~/.zshrc
 else
-    echo "personal tools are already installed"
+    mv $HOME/.personaltools $HOME/.personaltools.backup
+    cp .personaltools ~/.
+    source $HOME/.personaltools
+    echo "updated personaltools"
 fi
 
 echo "Setup 1Password app, then integrate with 1password cli, visit https://developer.1password.com/docs/cli/get-started"
