@@ -81,6 +81,7 @@ install_record_av() {
     cp ./recordwithvideo.scpt /Applications/
 }
 
+[ -z "$(ls /Applications | grep iTerm.app)}" ] && brew install --cask iterm2
 [ -n "$(which brew)" ] && grant_access
 [ -z "$(which brew)" ] && install_homebrew
 [ -z "$(which pyenv)" ] && install_pyenv
