@@ -31,6 +31,7 @@ rm -rf $HOME/.p10k.zsh
 rm -rf $HOME/.vim
 rm -rf $HOME/.vimrc
 rm -rf $HOME/.personaltools
+rm -rf $HOME/.personaltools.backup
 rm -rf $HOME/.vimrc.backup
 rm -rf $HOME/.sdkman
 rm -rf $HOME/.zsh
