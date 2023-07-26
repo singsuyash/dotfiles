@@ -1,0 +1,219 @@
+# docker begins
+enabledocker() {
+    alias dcelkup="docker-compose -f docker-compose.yml -f extensions/filebeat/filebeat-compose.yml up -d"
+    alias dw="watch docker ps -a"
+    alias dcup="docker-compose up -d --build"
+    alias dcdown="docker-compose down"
+    alias dwatch="watch docker ps -a"
+    alias dcelkdown="docker-compose -f docker-compose.yml -f extensions/filebeat/filebeat-compose.yml down"
+    alias indocker="screen /Users/suyashs/Library/Containers/com.docker.docker/Data/vms/0/tty"
+    alias dockertty="screen ~/Library/Containers/com.docker.docker/Data/vms/0/tty"
+}
+
+dclean() {
+    docker system df
+    docker system prune --volumes
+    docker system df
+}
+
+dockerratelimit(){
+    TOKEN=$(curl "https://auth.docker.io/token?service=registry.docker.io&scope=repository:ratelimitpreview/test:pull" | jq -r .token)
+    curl --head -H "Authorization: Bearer $TOKEN" https://registry-1.docker.io/v2/ratelimitpreview/test/manifests/latest
+}
+#export DOCKER_HOST="unix://$HOME/.colima/docker.sock"
+# docker ends
+
+# k8s begins
+enablek8s() {
+    alias k="kubectl"
+    alias kgo="k get all -o wide"
+    alias kgp="k get pods -o wide"
+    alias kgs="k get services -o wide"
+    alias kgd="k get deployments -o wide"
+    alias kdtoken="k describe secret -n kube-system | grep 'token:' -m 1 | cut -d' ' -f 7 | pbcopy"
+
+}
+# source <(kubectl completion zsh)
+# k8s ends
+
+# git begins
+alias gpr="git pull --rebase"
+alias gpmm="git push origin master:master"
+gpm() {
+	git push origin master:$1
+}
+gcom() {
+	git commit -m $1
+}
+# git ends
+
+# java begins
+
+gbuild() {
+    ./gradlew clean build
+}
+alias gl="./gradlew"
+alias gun="./gradlew bootrun"
+alias jcon="$HOME/.sdkman/candidates/java/current/bin/jconsole"
+killgradle() {
+    kill -9 $(ps | grep Gradle | awk '{print $1}')
+}
+javacore() {
+    idea ~/Projects/java-core
+}
+# java ends
+
+# system begins
+dsize() {
+    du -h -d 1 | sort -r -h
+}
+
+wport() {
+    sudo lsof -nP -iTCP:$1 | grep LISTEN
+}
+
+sn2() {
+    pu=$(op item get primarywifi --fields label=username)
+    pp=$(op item get primarywifi --fields label=password)
+    secu=$(op item get secondarywifi --fields label=username)
+    secp=$(op item get secondarywifi --fields label=password)
+    mu=$(op item get mobilehotspot --fields label=usernaem)
+    mp=$(op item get mobilehotspot --fields label=password)
+    if [ "$1" = "$pu" ]; then
+        networksetup -setairportnetwork en0 $pu "$pp"
+    elif [ "$1" = "$secu" ]; then
+        networksetup -setairportnetwork en0 $secu "$secp"
+    elif [ "$1" = "$mu" ]; then
+        networksetup -setairportnetwork en0 $mu "$mp"
+    fi
+}
+
+cn() {
+    /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | awk '/ SSID:/ {print $2}'
+}
+
+an() {
+    /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -s | awk '{print $1}'
+}
+
+dated() {
+    if [ "$1" = "" ]; then
+        date
+        date -u
+    else
+        date -v $1
+        date -u -v $1
+    fi
+}
+vol() {
+    osascript -e "set Volume $1"
+}
+
+auds() {
+    current_audio=$(SwitchAudioSource -c)
+    if [ "$current_audio" = "MacBook Pro Speakers" ]; then
+        SwitchAudioSource -s "WH-1000XM4"
+        vol 5
+    elif [ "$current_audio" = "WH-1000XM4" ]; then
+        SwitchAudioSource -s "MacBook Pro Speakers"
+        vol 10
+    fi
+}
+alias ls="ls -halt"
+alias ld="ls | grep '^d'"
+alias python="python3"
+alias pip="pip3"
+alias desk="cd ~/Desktop"
+alias vimz="vim ~/.zshrc"
+alias sourcez="source ~/.zshrc"
+alias vimv="vim ~/.vimrc"
+# system ends
+
+# creds begin
+okta() {
+    op item get okta --fields label=password | pbcopy
+}
+
+# creds end
+
+# kafka begins
+enablekafka() {
+    alias confluent="~/tools/confluent/bin/confluent"
+    alias avro="java -jar ~/tools/avro-tools/avro-tools-1.8.2.jar"
+    alias kbin="cd ~/tools/kafka_2.12-2.5.0/bin"
+    alias kex="cd ~/Projects/kafka-streams-experiments"
+}
+
+gettopics() {
+    curl http://localhost:8085/topics | jq .
+}
+
+getsubs() {
+    curl http://localhost:8081/subjects | jq .
+}
+
+settopic() {
+    cluster_id=$(curl http://localhost:8085/v3/clusters | jq -r .data[0].attributes.cluster_id)
+    curl --location --request POST 'http://localhost:8085/v3/clusters/'$cluster_id'/topics' \
+--header 'Content-Type: application/vnd.api+json' \
+--data-raw '{
+  "data": {
+    "attributes": {
+      "topic_name": "'$1'",
+      "partitions_count": '$2',
+      "replication_factor": '$3',
+      "configs": [
+          {
+              "name": "retention.ms",
+              "value": -1
+          }
+      ]
+    }
+  }
+}'
+}
+
+get-consumer-groups() {
+    ~/tools/kafka_2.12-2.5.0/bin/kafka-consumer-groups.sh --bootstrap-server 127.0.0.1:9092 --list
+}
+# kafka ends
+
+# redis begins
+enableredis() {
+    alias redis-server="~/tools/redis/redis-6.0.10/src/redis-server"
+    alias redis-cli="~/tools/redis/redis-6.0.10/src/redis-cli"
+}
+redisup() {
+    current_dir=$(pwd)
+    cd ~/redis-cluster/7000 && redis-server ~/redis-cluster/7000/redis.conf &
+    cd ~/redis-cluster/7001 && redis-server ~/redis-cluster/7001/redis.conf &
+    cd ~/redis-cluster/7002 && redis-server ~/redis-cluster/7002/redis.conf &
+    redis-cli --cluster create 127.0.0.1:7000 127.0.0.1:7001 127.0.0.1:7002  --cluster-replicas 0 -a tesco &
+    cd  $current_dir
+}
+
+redisdown() {
+    redis-cli -c -p 7000 --pass tesco FLUSHALL
+    redis-cli -c -p 7001 --pass tesco FLUSHALL
+    redis-cli -c -p 7002 --pass tesco FLUSHALL
+    kill -9 $(ps aux | grep "redis-server" | awk '{print $2}') || return
+}
+# redis ends
+
+# shortcuts begins
+alias dio="/Applications/draw.io.app/Contents/MacOS/draw.io"
+alias speed="~/tools/ookla-speedtest-1.0.0-macosx/speedtest"
+alias rv="osascript /Applications/recordwithvideo.scpt"
+alias jot="open https://blogbydev.com/wp-admin/post-new.php"
+alias jotp="open https://blogbydev.com/wp-admin/edit.php"
+alias gpt="open https://chat.openai.com/chat"
+# shortcuts ends
+
+
+tail-error-logs() {
+    tail -f $1 | jq '. | select(.level=="ERROR")'
+}
+
+tail-logs() {
+    tail -f $1 | jq '. | select(.message | contains ("'$2'"))'
+}
