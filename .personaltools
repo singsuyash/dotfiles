@@ -74,16 +74,17 @@ wport() {
 
 sn2() {
     pu=$(op item get primarywifi --fields label=username)
-    pp=$(op item get primarywifi --fields label=password)
     secu=$(op item get secondarywifi --fields label=username)
-    secp=$(op item get secondarywifi --fields label=password)
-    mu=$(op item get mobilehotspot --fields label=usernaem)
-    mp=$(op item get mobilehotspot --fields label=password)
+    mu=$(op item get mobilehotspot --fields label=username)
+
     if [ "$1" = "$pu" ]; then
+        pp=$(op item get primarywifi --fields label=password)
         networksetup -setairportnetwork en0 $pu "$pp"
     elif [ "$1" = "$secu" ]; then
+        secp=$(op item get secondarywifi --fields label=password)
         networksetup -setairportnetwork en0 $secu "$secp"
     elif [ "$1" = "$mu" ]; then
+        mp=$(op item get mobilehotspot --fields label=password)
         networksetup -setairportnetwork en0 $mu "$mp"
     fi
 }
