@@ -77,7 +77,7 @@ install_record_av() {
 [ -z "$(which pyenv)" ] && install_pyenv
 [ -z "$(which python3)" ] && pyenv install 3.10.4
 [ -z "$(which git)" ] && brew install git
-[ -z "$(which vim)" ] && brew install vim
+[ -z "$(which nvim)" ] && brew install neovim
 [ -z "$(which zsh)" ] && install_zsh
 [ -z "$(which zip)" ] && brew install zip
 [ -z "$(which unzip)" ] && brew install unzip
@@ -94,6 +94,16 @@ install_record_av() {
 [ -z "$(whereis sdk)" ] && install_sdkman
 [ -z "$(which speedtest)" ] && install_ookla_speed_test
 [ -z "$(ls /Applications | grep recordwithvideo)" ] && install_record_av
+[ -z "$(which docker)" ] && brew install docker
+[ -z "$(which docker-compose)" ] && brew install docker-compose
+[ -z "$(which colima)" ] && brew install colima 
+[ -z "$(ls /Applications | grep draw.io.app)" ] && brew install --cask drawio
+[ -z "$(ls /Applications | grep Ferdium.app)" ] && brew tap ferdium/ferdium && brew install ferdium
+[ -z "$(which code)" ] && brew install --cask visual-studio-code
+[ -z "$(which httpstat)" ] && brew install httpstat
+[ -z "$(which ranger)" ] && brew install ranger
+[ -z "$(ls /Applications | grep Microsoft\ Edge)" ] && brew install microsoft-edge
+[ -z "$(ls /Applications | grep zoom.us.app)" ] && brew install --cask zoom
 
 # copy vimrc
 if [ -n "$(ls -halt ~/ | grep vimrc)" ]
