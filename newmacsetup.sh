@@ -1,3 +1,9 @@
+
+grant_access() {
+    sudo chown -R $(whoami) /usr/local/Homebrew /usr/local/etc/bash_completion.d /usr/local/lib/pkgconfig /usr/local/share/aclocal /usr/local/share/doc /usr/local/share/info /usr/local/share/locale /usr/local/share/man/man3 /usr/local/share/man/man5 /usr/local/share/man/man7 /usr/local/share/man/man8 /usr/local/share/zsh /usr/local/share/zsh/site-functions /usr/local/var/homebrew/locks /usr/local/var/log
+    chmod u+w /usr/local/Homebrew /usr/local/etc/bash_completion.d /usr/local/lib/pkgconfig /usr/local/share/aclocal /usr/local/share/doc /usr/local/share/info /usr/local/share/locale /usr/local/share/man/man3 /usr/local/share/man/man5 /usr/local/share/man/man7 /usr/local/share/man/man8 /usr/local/share/zsh /usr/local/share/zsh/site-functions /usr/local/var/homebrew/locks /usr/local/var/log
+}
+
 install_homebrew() {
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 	(echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> /Users/suyash/.zprofile
@@ -73,6 +79,7 @@ install_record_av() {
     cp ./recordwithvideo.scpt /Applications/
 }
 
+[ -n "$(which brew)" ] && grant_access
 [ -z "$(which brew)" ] && install_homebrew
 [ -z "$(which pyenv)" ] && install_pyenv
 [ -z "$(which python3)" ] && pyenv install 3.10.4
