@@ -14,7 +14,7 @@ install_homebrew() {
 
 install_zsh() {
     brew install zsh
-    chsh -s /opt/homebrew/bin/zsh
+    chsh -s $(which zsh)
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 }
 
@@ -88,7 +88,7 @@ install_record_av() {
 [ -z "$(which python3)" ] && pyenv install 3.10.4
 [ -z "$(which git)" ] && brew install git
 [ -z "$(which nvim)" ] && brew install neovim
-[ -z "$(which zsh)" ] && install_zsh
+[ -z "$(brew ls --versions zsh)" ] && install_zsh
 [ -z "$(which zip)" ] && brew install zip
 [ -z "$(which unzip)" ] && brew install unzip
 [ -z "$(which tree)" ] && brew install tree 
