@@ -100,7 +100,7 @@ install_record_av() {
 [ -z "$(brew ls --versions powerlevel10k)" ] && install_powerlevel10k
 [ -z "$(ls ~/.zsh/ | grep zsh-autosuggestions)" ] && install_zsh_autosuggestions
 [ -z "$(ls ~/.zsh/ | grep zsh-syntax-highlighting)" ] && install_zsh_syntax_highlighting
-[ -z "$(whereis sdk)" ] && install_sdkman
+[ -z "$(which sdk)" ] && install_sdkman
 [ -z "$(which speedtest)" ] && install_ookla_speed_test
 [ -z "$(ls /Applications | grep recordwithvideo)" ] && install_record_av
 [ -z "$(which docker)" ] && brew install docker
