@@ -48,6 +48,10 @@ gpm() {
 gcom() {
 	git commit -m $1
 }
+
+gh() {
+    git clone git@git.idfcbank.com:optimus/$1.git
+}
 # git ends
 
 # java begins
@@ -125,8 +129,6 @@ auds() {
 }
 alias ls="ls -halt"
 alias ld="ls | grep '^d'"
-alias python="python3"
-alias pip="pip3"
 alias desk="cd ~/Desktop"
 alias vimz="vim ~/.zshrc"
 alias sourcez="source ~/.zshrc"
@@ -221,3 +223,14 @@ tail-error-logs() {
 tail-logs() {
     tail -f $1 | jq '. | select(.message | contains ("'$2'"))'
 }
+
+findfile(){
+    find . -name "*$1*"
+}
+
+finddir(){
+    find . -type d -name "*$1*"
+}
+
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
